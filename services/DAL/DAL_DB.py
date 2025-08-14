@@ -16,7 +16,6 @@ class DAL_DB:
 
     def select(self, condition = ""):
 
-        print(self.host, self.port, self.user, self.password, self.database)
         db_conn_info = {
             "user": self.user,
             "passwd": self.password,
@@ -24,6 +23,7 @@ class DAL_DB:
             "port": self.port,
             "database": self.database
         }
+
         query = f"SELECT * FROM {self.table} {condition}"
         with closing(mysql.connector.connect(**db_conn_info)) as conn:
             with closing(conn.cursor()) as cur:
