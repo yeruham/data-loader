@@ -1,4 +1,5 @@
-CREATE DATABASE db_data;
+CREATE DATABASE IF NOT EXISTS db_data;
+
 USE db_data;
 
 CREATE TABLE data (

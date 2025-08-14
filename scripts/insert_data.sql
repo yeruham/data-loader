@@ -1,3 +1,5 @@
+USE db_data;
+
 INSERT INTO data (first_name, last_name)
 VALUES
 ('yeruham', 'mendelson'),

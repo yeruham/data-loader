@@ -1,46 +1,34 @@
 import mysql.connector
+from contextlib import closing
 
 
-class DAL:
+class DAL_DB:
 
-    def __init__(self, host, user, password, database, table):
+    def __init__(self, host, port, user, password, database, table):
         self.host = host
+        self.port = port
         self.user = user
         self.password = password
         self.database = database
         self.table = table
 
 
+
     def select(self, condition = ""):
-        with mysql.connector.connect(host= self.host, user= self.user, password= self.password, database= self.database) as connection:
-            query = f"SELECT * FROM {self.table} {condition}"
-            cursor = connection.cursor()
-            cursor.execute(query)
-            rows_agents = cursor.fetchall()
-            return rows_agents
+
+        print(self.host, self.port, self.user, self.password, self.database)
+        db_conn_info = {
+            "user": self.user,
+            "passwd": self.password,
+            "host": self.host,
+            "port": self.port,
+            "database": self.database
+        }
+        query = f"SELECT * FROM {self.table} {condition}"
+        with closing(mysql.connector.connect(**db_conn_info)) as conn:
+            with closing(conn.cursor()) as cur:
+                cur.execute(query)
+                result = cur.fetchall()
+                return result
 
 
-    def insert(self, table_columns,  new_values):
-        with mysql.connector.connect(host= self.host, user= self.user, password= self.password, database= self.database) as connection:
-            columns = ", ".join(table_columns)
-            values = "', '".join(new_values)
-            query = f"INSERT INTO {self.table}({columns}) VALUES('{values}')"
-            cursor = connection.cursor()
-            cursor.execute(query)
-            connection.commit()
-
-
-    def delete(self, condition= ""):
-        with mysql.connector.connect(host= self.host, user= self.user, password= self.password, database= self.database) as connection:
-            query = f"DELETE FROM {self.table} {condition}"
-            cursor = connection.cursor()
-            cursor.execute(query)
-            connection.commit()
-
-
-    def update(self, update, condition= ""):
-        with mysql.connector.connect(host= self.host, user= self.user, password= self.password, database= self.database) as connection:
-            query = f"UPDATE {self.table} SET {update} {condition}"
-            cursor = connection.cursor()
-            cursor.execute(query)
-            connection.commit()
