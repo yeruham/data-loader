@@ -8,6 +8,8 @@ oc new-app mysql-ephemeral --name mysql
 
 # name of service
 oc get service
+# route by name of service
+oc expose service mysql
 
 # copy sql files to mysql-app
 oc cp ./create_data.sql name_pod:/tmp/create_data.sql
@@ -15,8 +17,3 @@ oc cp ./insert_data.sql name_pod:/tmp/insert_data.sql
 # exec to pod for run sql files
 oc exec -it mysql-1-lhbbv -- bash
 
-# route by name of service
-oc expose service mysql
-
-
-oc new-app https://github.com/yeruham/data-loader --name data-loader
