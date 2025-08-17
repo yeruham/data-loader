@@ -1,4 +1,4 @@
-USE db_data;
+USE load_db;
 
 INSERT INTO data (first_name, last_name)
 VALUES
