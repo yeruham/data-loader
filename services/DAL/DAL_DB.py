@@ -18,11 +18,13 @@ class DAL_DB:
 
         db_conn_info = {
             "user": self.user,
-            "passwd": self.password,
+            "password": self.password,
             "host": self.host,
             "port": self.port,
-            "database": self.database
+            "database": self.database,
+            "auth_plugin": 'mysql_native_password'
         }
+
 
         query = f"SELECT * FROM {self.table} {condition}"
         with closing(mysql.connector.connect(**db_conn_info)) as conn:

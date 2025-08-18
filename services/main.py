@@ -8,7 +8,7 @@ app = FastAPI()
 
 port = 3306
 app.state.db_host = os.getenv("DB_HOST", "localhost")
-app.state.db_port = os.getenv("DB_PORT", 3306)
+app.state.db_port = int(os.getenv("DB_PORT", 3306))
 app.state.db_user = os.getenv("DB_USER", "root")
 app.state.db_password = os.getenv("DB_PASSWORD", "")
 app.state.db_database = os.getenv("DB_DATABASE", "eagleEyeDB")
